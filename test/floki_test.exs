@@ -298,6 +298,64 @@ defmodule FlokiTest do
     assert Floki.raw_html(tree, encode: false) == input
   end
 
+  test "raw_html pretty with doctype" do
+    html = """
+      <!doctype html>
+      <html>
+      <head>
+      <title>Test</title>
+      </head>
+      <body>
+        <div class="content">
+          <span>
+            <div>
+
+      <span>
+                <small>
+
+      very deep content
+
+                </small>
+              </span>
+    </div>
+
+            <img src="file.jpg" />
+                    </span>
+        </div>
+      </body>
+      </html>
+    """
+
+    pretty_html =
+      html
+      |> document!()
+      |> Floki.raw_html(pretty: true)
+
+    assert pretty_html == """
+           <html>
+             <head>
+               <title>
+                 Test
+               </title>
+             </head>
+             <body>
+               <div class="content">
+                 <span>
+                   <div>
+                     <span>
+                       <small>
+                         very deep content
+                       </small>
+                     </span>
+                   </div>
+                   <img src="file.jpg"/>
+                 </span>
+               </div>
+             </body>
+           </html>
+           """
+  end
+
   # Floki.find/2 - Classes
 
   test "find elements with a given class" do
@@ -1131,27 +1189,6 @@ defmodule FlokiTest do
     elements = Floki.find(document!(@html), class_selector)
 
     assert Floki.attribute(elements, "title") == []
-  end
-
-  test "Floki.map/2 transforms nodes" do
-    elements = Floki.find(document!(@html), ".content")
-
-    transformation = fn
-      {"a", [{"href", x} | xs]} ->
-        {"a", [{"href", String.replace(x, "http://", "https://")} | xs]}
-
-      x ->
-        x
-    end
-
-    result = Floki.map(elements, transformation)
-
-    hrefs_after =
-      result
-      |> Floki.find("a")
-      |> Floki.attribute("href")
-
-    assert hrefs_after == ["https://google.com", "https://elixir-lang.org", "https://java.com"]
   end
 
   describe "find_and_update/3" do

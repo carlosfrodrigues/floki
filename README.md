@@ -1,8 +1,10 @@
 [![Actions Status](https://github.com/philss/floki/workflows/CI/badge.svg?branch=master)](https://github.com/philss/floki/actions)
 [![Floki version](https://img.shields.io/hexpm/v/floki.svg)](https://hex.pm/packages/floki)
-[![Hex.pm](https://img.shields.io/hexpm/dt/floki.svg)](https://hex.pm/packages/floki)
+[![Hex Docs](https://img.shields.io/badge/hex-docs-lightgreen.svg)](https://hexdocs.pm/floki/)
 [![Inline docs](https://inch-ci.org/github/philss/floki.svg?branch=master)](https://inch-ci.org/github/philss/floki)
-[![SourceLevel](https://app.sourcelevel.io/github/philss/floki.svg)](https://app.sourcelevel.io/github/philss/floki)
+[![Hex.pm](https://img.shields.io/hexpm/dt/floki.svg)](https://hex.pm/packages/floki)
+[![License](https://img.shields.io/hexpm/l/floki.svg)](https://github.com/philss/floki/blob/master/LICENSE)
+[![Last Updated](https://img.shields.io/github/last-commit/philss/floki.svg)](https://github.com/philss/floki/commits/master)
 
 <img src="assets/images/floki-logo-with-type.svg" width="500" alt="Floki logo">
 
@@ -60,23 +62,21 @@ Add Floki to your `mix.exs`:
 ```elixir
 defp deps do
   [
-    {:floki, "~> 0.29.0"}
+    {:floki, "~> 0.30.0"}
   ]
 end
 ```
 
 After that, run `mix deps.get`.
 
-You can check the [change log](https://github.com/philss/floki/blob/master/CHANGELOG.md) for changes.
+You can check the [changelog](CHANGELOG.md) for changes.
 
 ## Dependencies
 
-Floki needs the `leex` module in order to compile.
+Floki needs the `:leex` module in order to compile.
 Normally this module is installed with Erlang in a complete installation.
 
-If you get this [kind of error](https://github.com/philss/floki/issues/35),
-you need to install the `erlang-dev` and `erlang-parsetools` packages in order get the `leex` module.
-The packages names may be different depending on your OS.
+If you get this ["module :leex is not available"](https://github.com/philss/floki/issues/35) error message, you need to install the `erlang-dev` and `erlang-parsetools` packages in order get the `:leex` module. The packages names may be different depending on your OS.
 
 ### Alternative HTML parsers
 
@@ -104,6 +104,13 @@ Floki supports the following alternative parsers:
 [benchmarks](https://hexdocs.pm/fast_html/readme.html#benchmarks) conducted by
 its developers.
 
+You can perform a benchmark by running the following:
+
+    $ sh benchs/extract.sh
+    $ mix run benchs/parse_document.exs
+
+Extracting the files is needed only once.
+
 #### Using `html5ever` as the HTML parser
 
 Rust needs to be installed on the system in order to compile html5ever. To do that, please
@@ -114,7 +121,7 @@ After Rust is set up, you need to add `html5ever` NIF to your dependency list:
 ```elixir
 defp deps do
   [
-    {:floki, "~> 0.29.0"},
+    {:floki, "~> 0.30.0"},
     {:html5ever, "~> 0.8.0"}
   ]
 end
@@ -142,7 +149,7 @@ First, add `fast_html` to your dependencies:
 ```elixir
 defp deps do
   [
-    {:floki, "~> 0.29.0"},
+    {:floki, "~> 0.30.0"},
     {:fast_html, "~> 2.0"}
   ]
 end
@@ -262,4 +269,6 @@ There are also some selectors based on non-standard specifications. They are:
 
 ## License
 
-Floki is under MIT license. Check the `LICENSE` file for more details.
+Copyright (c) 2014 Philip Sampaio Silva
+
+Floki is under MIT license. Check the [LICENSE](https://github.com/philss/floki/blob/master/LICENSE) file for more details.
